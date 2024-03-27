@@ -36,3 +36,12 @@ CREATE TABLE Dossier (
     CONSTRAINT FK_Dossier_Client FOREIGN KEY (numCli) REFERENCES Client(numCli),
     CONSTRAINT FK_Dossier_Camera FOREIGN KEY (numCam) REFERENCES Camera(numCam)
 );
+
+CREATE TABLE Wishlist (
+   numCli INTEGER NOT NULL,
+   numCam INTEGER NOT NULL,
+   CONSTRAINT PK_Wishlist PRIMARY KEY (numCli, numCam),
+   CONSTRAINT FK_Wishlist FOREIGN KEY (numCli) REFERENCES Client(numCli),
+   CONSTRAINT FK_Wishlist FOREIGN KEY (numCam) REFERENCES Camera(numCam)
+);
+
