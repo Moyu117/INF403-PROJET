@@ -29,7 +29,7 @@ CREATE TABLE Camera (
 
 CREATE TABLE Marque (
     numM INTEGER NOT NULL,
-    nomM TEXT NOT NULL,
+    nomM TEXT NOT NULL UNIQUE, -- make sure that only one id corresponds to one brand
     descrp TEXT NOT NULL,
     CONSTRAINT PK_Marque PRIMARY KEY (numM)
 );
