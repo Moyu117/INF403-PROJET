@@ -23,7 +23,8 @@ CREATE TABLE Camera (
     prix REAL NOT NULL,
     CONSTRAINT PK_Camera PRIMARY KEY (numCam),
     CONSTRAINT FK_Camera_Marque FOREIGN KEY (numM) REFERENCES Marque(numM),
-    CONSTRAINT CK_Qualite CHECK (qualite IN ('parfait','correct','tresbon'))
+    CONSTRAINT CK_Qualite CHECK (qualite IN ('parfait','correct','tresbon')),
+    CONSTRAINT CK_Prix CHECK (prix > 0)
 );
 
 CREATE TABLE Marque (
