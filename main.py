@@ -121,21 +121,32 @@ def select_param():
         marque = input("Entrez la marque de la caméra: ")
         select_cameras_marque_param(conn, marque)
         conn.close()
+
     elif choix == 'b':
         camera = input("Entrez le numéro de la caméra: ")
         select_nb_personnes_wishlist(conn, camera)
         conn.close()
+
     elif choix == 'c':
         camera = input("Entrez le numéro de la caméra: ")
         select_camera_vendu(conn, camera)
         conn.close()
+
     elif choix == 'd':
         prix = input("Entrez le prix: ")
-        select_cameras_prix_inf(conn, prix)
-        conn.close()
+        try:
+            prix = float(prix)
+            select_cameras_prix_inf(conn, prix)
+            conn.close()
+        except ValueError:
+            print("Veuillez entrer un nombre")
+
     elif choix == 'q':
         print("Au revoir!")
         conn.close()
+    else:
+        print("Veuillez entrer un choix valide")
+        select_param()
 
 
 
@@ -146,15 +157,17 @@ def main():
     # Créer une connexion a la BD
     conn = db.creer_connexion(db_file)
 
-    # Remplir la BD
-    print("1. On crée la bd et on l'initialise avec des premières valeurs.")
-    db.mise_a_jour_bd(conn, "data/main.sql")
-    db.mise_a_jour_bd(conn, "data/Jeu_de_Test_OK.sql")
+    if conn is not None:
+        # Remplir la BD
+        print("1. On crée la bd et on l'initialise avec des premières valeurs.")
+        db.mise_a_jour_bd(conn, "data/main.sql")
+        db.mise_a_jour_bd(conn, "data/Jeu_de_Test_OK.sql")
 
-    # Lire la BD
-    print("2. Liste de toutes les caméras")
-    select_all_cameras(conn)
-    
+        # Lire la BD
+        print("2. Liste de toutes les caméras")
+        select_all_cameras(conn)
+    else:
+        print("Erreur! Impossible de créer la base de données.")
 
 if __name__ == "__main__":
     main()

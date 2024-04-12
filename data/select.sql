@@ -1,3 +1,7 @@
+---------------------------------------------------
+-- Description: Requêtes de sélection
+---------------------------------------------------
+
 -- Requête sélection/projection
 -- Afficher toutes les caméras
 SELECT * FROM Camera;
