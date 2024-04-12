@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS Dossier;
 DROP TABLE IF EXISTS Wishlist; 
 
 -- Pour activer les FKs  
-PRAGMA FOREIGN_KEYS=ON;  
+--PRAGMA FOREIGN_KEYS=ON;  
 
 CREATE TABLE Client (
     numCli INTEGER NOT NULL,
