@@ -19,6 +19,8 @@ INSERT INTO Camera VALUES (1025, 2, 'D850', '2019-08-24', 'correct', 1500.5);
 INSERT INTO Camera VALUES (1026, 3, 'Alpha 7 III', '2021-02-08', 'tresbon', 1800);
 INSERT INTO Camera VALUES (1027, 1, 'EOS 5D Mark IV', '2018-09-08', 'correct', 2500.00);
 INSERT INTO Camera VALUES (1028, 4, 'Lumix GH5', '2019-03-15', 'parfait', 1700);
+INSERT INTO Camera VALUES (1029, 5, 'M10', '2020-12-03', 'parfait', 2000);
+INSERT INTO Camera VALUES (1030, 1, 'EOS 4000D', '2023-09-08', 'correct', 2500.00);
 
 
 INSERT INTO Dossier VALUES (9001010, 10000001, 1024, '2024-02-19');
