@@ -20,5 +20,5 @@ FROM Camera JOIN Marque ON Camera.numM = Marque.numM
 GROUP BY nomM;
 
 -- Requête paramétées
--- Afficher les caméras dont le prix est supérieur à 2000
-SELECT * FROM Camera WHERE prix > 2000;
+-- Afficher les caméras dont le prix est inférieur à 2000
+SELECT * FROM Camera WHERE prix < 2000;
