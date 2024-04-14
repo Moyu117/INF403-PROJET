@@ -18,11 +18,11 @@ def select_all_cameras(conn):
 
 
 # ---------------Requête opérateurs ensemblistes---------------
-# donner les clients qui ont déjà acheté une caméra
+# Les clients qui ont acheté un appareil photo et qui ont l'appareil photo sur leur liste de souhaits.
 def select_clients_ayant_achete_une_camera(conn):
 
     cur = conn.cursor()
-    cur.execute("SELECT numCli, nomCli FROM Client INTERSECT SELECT numCli FROM Dossier")
+    cur.execute("SELECT numCli FROM Dossier INTERSECT SELECT numCli FROM Wishlist")
 
     rows = cur.fetchall()
 
@@ -69,7 +69,7 @@ def select_cameras_marque_param(conn, marque):
         for row in rows:
             print(row)
     else:
-        print("Aucune caméra de la marque", marque)
+        print("Aucune caméra de la marque\n", marque)
 
 # Indique combien de personnes ont ajouté cette caméra à leur Wishlist
 def select_nb_personnes_wishlist(conn, camera):
@@ -78,7 +78,7 @@ def select_nb_personnes_wishlist(conn, camera):
 
     rows = cur.fetchone()
 
-    print("Il y a", rows[0], "personnes qui ont ajouté cette caméra à leur Wishlist")
+    print("Il y a", rows[0], "personnes qui ont ajouté cette caméra à leur Wishlist\n")
 
 # Vérifiez si la camera a été vendu
 def select_camera_vendu(conn, camera):
@@ -88,9 +88,9 @@ def select_camera_vendu(conn, camera):
     rows = cur.fetchone()
 
     if rows[0] > 0:
-        print("Cette caméra a été vendu")
+        print("Cette caméra a été vendu\n")
     else:
-        print("Cette caméra n'a pas été vendu")
+        print("Cette caméra n'a pas été vendu\n")
 
 # Afficher les caméras dont le prix est inférieur à prix saisie par l'utilisateur
 def select_cameras_prix_inf(conn, prix):
@@ -109,45 +109,46 @@ def select_cameras_prix_inf(conn, prix):
 def select_param():
     database = "data/camera.db"
     conn = db.creer_connexion(database)
-    print('''Veuillez sélectionner le sujet de votre demande:
-            a. Afficher les caméras d'une marque donnée
-            b. Indiquer combien de personnes ont ajouté cette caméra à leur Wishlist
-            c. Vérifiez si la camera a été vendu
-            d. Afficher les caméras dont le prix est inférieur à prix saisie par l'utilisateur
-            q. Quiiter\n''')
 
-    choix = input("Votre choix: ")
-    if choix == 'a':
-        marque = input("Entrez la marque de la caméra: ")
-        select_cameras_marque_param(conn, marque)
-        conn.close()
+    while True:
+        print('''-----------------------------------------------------------------------
+                Veuillez sélectionner le sujet de votre demande:
+                a. Afficher les caméras d'une marque donnée
+                b. Indiquer combien de personnes ont ajouté cette caméra à leur Wishlist
+                c. Vérifiez si la camera a été vendu
+                d. Afficher les caméras dont le prix est inférieur à prix saisie par l'utilisateur
+                q. Quiiter\n''')
 
-    elif choix == 'b':
-        camera = input("Entrez le numéro de la caméra: ")
-        select_nb_personnes_wishlist(conn, camera)
-        conn.close()
+        choix = input("Votre choix: ")
+        if choix == 'a':
+            marque = input("Entrez la marque de la caméra: ")
+            select_cameras_marque_param(conn, marque)
 
-    elif choix == 'c':
-        camera = input("Entrez le numéro de la caméra: ")
-        select_camera_vendu(conn, camera)
-        conn.close()
+        elif choix == 'b':
+            camera = input("Entrez le numéro de la caméra: ")
+            select_nb_personnes_wishlist(conn, camera)
 
-    elif choix == 'd':
-        prix = input("Entrez le prix: ")
-        try:
-            prix = float(prix)
-            select_cameras_prix_inf(conn, prix)
-            conn.close()
-        except ValueError:
-            print("Veuillez entrer un nombre")
+        elif choix == 'c':
+            camera = input("Entrez le numéro de la caméra: ")
+            select_camera_vendu(conn, camera)
 
-    elif choix == 'q':
-        print("Au revoir!")
-        conn.close()
-    else:
-        print("Veuillez entrer un choix valide")
-        select_param()
+        elif choix == 'd':
+            prix = input("Entrez le prix: \n")
+            try:
+                prix = float(prix)
+                select_cameras_prix_inf(conn, prix)
+            except ValueError:
+                print("Veuillez entrer un nombre: ")
 
+        elif choix == 'q':
+            print("Au revoir!")
+            break
+
+        else:
+            print("Veuillez entrer un choix valide")
+            select_param()
+
+    conn.close()
 
 
 def main():
