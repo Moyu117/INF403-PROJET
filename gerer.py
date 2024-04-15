@@ -275,7 +275,7 @@ def insert_dossier(conn):
             print("La date de vente doit être au format YYYY-MM-DD")
             return
 
-        data = (numD, numCli, numCam, dateE, dateR)
+        data = (numD, numCli, numCam, dateVente)
         
         cur = conn.cursor()
         # check if client and camera exist
