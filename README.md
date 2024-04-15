@@ -66,3 +66,4 @@ faire des tests rapides:
     ('Sony', 1)
 
 
+Requête paramétées: 

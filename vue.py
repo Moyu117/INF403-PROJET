@@ -20,6 +20,25 @@ def afficher_vue(conn, nom_vue):
 
 # CREATE VIEW
 #--------------------------------------------
+def creer_vue_client_liste(conn):
+    '''Vue de la liste des clients
+
+    affiche les informations de base sur tous les clients, y compris leur numéro, nom et numéro de téléphone.'''
+
+    sql="""
+    CREATE VIEW View_ClientList AS
+    SELECT numCli, nomCli, phone
+    FROM Client;"""
+
+    try:
+        cur = conn.cursor()
+        cur.execute(sql)
+        conn.commit()
+        print("Vue 'VIEW View_ClientList' créée avec succès")
+    except sqlite3.Error as e:
+        print(e)
+
+#--------------------------------------------
 def creer_vue_client_achat(conn):
     ''' Vue de l'historique des achats des clients
 
@@ -85,8 +104,8 @@ def creer_vue_vente_etat(conn):
 # creer_vue_client_achat(conn)
 # afficher_vue(conn, 'View_ClientPurchases')
 
-creer_vue_appareil_achat(conn)
-afficher_vue(conn, 'View_CameraPurchases')
+# creer_vue_appareil_achat(conn)
+# afficher_vue(conn, 'View_CameraPurchases')
 
 # creer_vue_vente_etat(conn)
 # afficher_vue(conn, 'View_CameraSalesStatus')
