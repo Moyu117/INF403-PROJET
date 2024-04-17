@@ -48,6 +48,6 @@ CREATE TABLE  Wishlist (
     numCli INTEGER NOT NULL,
     numCam INTEGER NOT NULL,
     CONSTRAINT PK_Wishlist PRIMARY KEY (numCli, numCam),
-    CONSTRAINT FK_Wishlist FOREIGN KEY (numCli) REFERENCES Client(numCli),
-    CONSTRAINT FK_Wishlist FOREIGN KEY (numCam) REFERENCES Camera(numCam)
+    CONSTRAINT FK_Wishlist_Client FOREIGN KEY (numCli) REFERENCES Client(numCli),
+    CONSTRAINT FK_Wishlist_Camera FOREIGN KEY (numCam) REFERENCES Camera(numCam)
 );
