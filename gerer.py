@@ -415,6 +415,7 @@ def gerer():
 
     if conn is not None:
         while True:
+            print("******************************")
             print("1. Gérer les clients")
             print("2. Gérer les marques")
             print("3. Gérer les caméras")
@@ -513,6 +514,11 @@ def gerer():
                     break
                 else:
                     print("Choix invalide")
+
+            elif choix == 0:
+                break
+            else:
+                print("Choix invalide")
 
     conn.close()
 
