@@ -150,6 +150,34 @@ def select_param():
 
     conn.close()
 
+# demande à l'utilisateur de saisir le SQL REQUETE à exécuter
+def select_sql():
+    database = "data/camera.db"
+    conn = db.creer_connexion(database)
+
+    while True:
+        sql = input("Entrez votre requête SQL: ")
+        try:
+            cur = conn.cursor()
+            cur.execute(sql)
+
+            rows = cur.fetchall()
+
+            for row in rows:
+                print(row)
+
+        except Exception as e:
+            print(e)
+
+        choix = input("Voulez-vous continuez? (o/n): ")
+        if choix == 'n':
+            print("Au revoir!")
+            break
+        elif choix == 'o':
+            continue
+        else:
+            print("Veuillez entrer un choix valide")
+            break
 
 def main():
     # Nom de la BD à créer

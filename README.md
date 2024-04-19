@@ -67,3 +67,33 @@ faire des tests rapides:
 
 
 Requête paramétées: 
+
+    $ python3
+    Python 3.10.13 (main, Apr  3 2024, 17:08:15) [GCC 9.4.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import main
+    >>> main.select_param()
+
+Requête saisie par l'utilisateur:
+
+    $ python3
+    Python 3.10.13 (main, Apr  3 2024, 17:08:15) [GCC 9.4.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import main
+    >>> main.select_sql()
+
+GERER LES DONNES:
+
+    $ python3
+    Python 3.10.13 (main, Apr  3 2024, 17:08:15) [GCC 9.4.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import gerer
+    >>> import db
+    >>> f = "data/camera.db"
+    >>> conn = db.creer_connexion(f)
+    >>> gerer.insert_client(conn)
+    Entrez le numéro du client: 1111
+    Entrez le nom du client: TEST
+    Entrez le numéro de téléphone du client: 1234567890
+    Client ajouté avec succès
+    >>>

@@ -21,7 +21,7 @@ def valid_price(price):
 #***************************************************
 # --------------------- Client ---------------------
 #***************************************************
-def insert_client(conn):
+def insert_client(conn): # test ok
     try:
         numCli = input("Entrez le numéro du client: ")
         if not numCli.isdigit():
@@ -41,7 +41,7 @@ def insert_client(conn):
     except sqlite3.Error as e:
         print("Erreur de la base de données: ", e)
 
-def delete_client(conn):
+def delete_client(conn): # test ok
     try:
         numCli = input("Entrez le numéro du client: ")
         if not numCli.isdigit():
@@ -62,7 +62,7 @@ def delete_client(conn):
     except sqlite3.Error as e:
         print("Erreur de la base de données: ", e)
 
-def update_client(conn):
+def update_client(conn): # test ok
     try:
         numCli = input("Entrez le numéro du client: ")
         if not numCli.isdigit():
@@ -71,10 +71,10 @@ def update_client(conn):
         nom = input("Entrez le nom du client: ")
         phone = input("Entrez le numéro de téléphone du client: ")
 
-        data = (nom, phone, numCli)
+        data = (numCli, nom, phone)
         
         cur = conn.cursor()
-        cur.execute("UPDATE Client SET nom = ?, phone = ? WHERE numCli = ?", data)
+        cur.execute("UPDATE Client SET nomCli = ?, phone = ? WHERE numCli = ?", (nom, phone, numCli))
         if cur.rowcount == 0:
             print("Aucun client avec ce numéro")
             return

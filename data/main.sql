@@ -39,7 +39,7 @@ CREATE TABLE Dossier (
     numCli INTEGER NOT NULL,
     numCam INTEGER NOT NULL,
     dateVente DATE,
-    CONSTRAINT PK_Dossier PRIMARY KEY (numD),
+    CONSTRAINT PK_Dossier PRIMARY KEY (numD, numCam), -- make sure that one camera can be sold only once
     CONSTRAINT FK_Dossier_Client FOREIGN KEY (numCli) REFERENCES Client(numCli),
     CONSTRAINT FK_Dossier_Camera FOREIGN KEY (numCam) REFERENCES Camera(numCam)
 );
