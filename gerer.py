@@ -90,7 +90,7 @@ def update_client(conn): # test ok
 #***************************************************
 # --------------------- Camera ---------------------
 #***************************************************
-def insert_camera(conn):
+def insert_camera(conn): # test ok
     try:
         numCam = input("Entrez le numéro de la caméra: ")
         if not numCam.isdigit():
@@ -129,7 +129,7 @@ def insert_camera(conn):
     except sqlite3.IntegrityError as e:
         print(f"Erreur d'ajout de la caméra: {e}")
 
-def delete_camera(conn):
+def delete_camera(conn): # test ok
     try:
         numCam = input("Entrez le numéro de la caméra: ")
         if not numCam.isdigit():
@@ -150,7 +150,7 @@ def delete_camera(conn):
         print("Erreur de la base de données: ", e)
     
 
-def update_camera(conn):
+def update_camera(conn): # test ok
     try:
         numCam = input("Entrez le numéro de la caméra: ")
         if not numCam.isdigit():
@@ -188,7 +188,7 @@ def update_camera(conn):
 #***************************************************
 # --------------------- Marque ---------------------
 #***************************************************
-def insert_marque(conn):
+def insert_marque(conn): # test ok
     try:
         numM = input("Entrez le numéro de la marque: ")
         if not numM.isdigit():
@@ -208,7 +208,7 @@ def insert_marque(conn):
     except sqlite3.Error as e:
         print("Erreur de la base de données: ", e)
 
-def delete_marque(conn):
+def delete_marque(conn): # test ok
     try:
         numM = input("Entrez le numéro de la marque: ")
         if not numM.isdigit():
@@ -228,7 +228,7 @@ def delete_marque(conn):
     except sqlite3.Error as e:
         print("Erreur de la base de données: ", e)
 
-def update_marque(conn):
+def update_marque(conn): # test ok
     try:
         numM = input("Entrez le numéro de la marque: ")
         if not numM.isdigit():
@@ -256,7 +256,7 @@ def update_marque(conn):
 #***************************************************
 # --------------------- Dossier --------------------
 #***************************************************
-def insert_dossier(conn):
+def insert_dossier(conn): # test ok
     try:
         numD = input("Entrez le numéro du dossier: ")
         if not numD.isdigit():
@@ -288,13 +288,13 @@ def insert_dossier(conn):
             print("Aucune caméra avec ce numéro")
             return
 
-        cur.execute("INSERT INTO Dossier VALUES (?, ?, ?, ?, ?)", data)
+        cur.execute("INSERT INTO Dossier VALUES (?, ?, ?, ?)", data)
         conn.commit()
         print("Dossier ajouté avec succès")
     except sqlite3.IntegrityError as e:
         print(f"Erreur d'ajout du dossier: {e}")
 
-def delete_dossier(conn):
+def delete_dossier(conn): # test ok
     try:
         numD = input("Entrez le numéro du dossier: ")
         if not numD.isdigit():
@@ -314,7 +314,7 @@ def delete_dossier(conn):
     except sqlite3.Error as e:
         print("Erreur de la base de données: ", e)
 
-def update_dossier(conn):
+def update_dossier(conn): # test ok
     try:
         numD = input("Entrez le numéro du dossier: ")
         if not numD.isdigit():
@@ -328,10 +328,9 @@ def update_dossier(conn):
         if not numCam.isdigit():
             print("Le numéro de la caméra doit être un entier")
             return
-        dateE = input("Entrez la date d'entrée: ")
-        dateR = input("Entrez la date de réparation: ")
+        dateVente = input("Entrez la date de vente: ")
 
-        data = (numCli, numCam, dateE, dateR, numD)
+        data = (numCli, numCam, dateVente, numD)
         
         cur = conn.cursor()
         # check if client and camera exist
@@ -344,7 +343,7 @@ def update_dossier(conn):
             print("Aucune caméra avec ce numéro")
             return
 
-        cur.execute("UPDATE Dossier SET numCli = ?, numCam = ?, dateE = ?, dateR = ? WHERE numD = ?", data)
+        cur.execute("UPDATE Dossier SET numCli = ?, numCam = ?, dateVente = ? WHERE numD = ?", data)
         if cur.rowcount == 0:
             print("Aucun dossier avec ce numéro")
             return
@@ -387,7 +386,7 @@ def insert_wishlist(conn):
     except sqlite3.Error as e:
         print("Erreur de base de données: ", e)
 
-def delete_wishlist(conn):
+def delete_wishlist(conn): # test ok
     try:
         numCli = input("Entrez le numéro du client: ")
         numCam = input("Entrez le numéro de la caméra: ")
@@ -403,8 +402,39 @@ def delete_wishlist(conn):
     except sqlite3.Error as e:
         print("Erreur de base de données: ", e)
 
-def update_wishlist(conn):
-    pass
+def update_wishlist(conn): # test ok
+    try:
+        numCli = input("Entrez le numéro du client: ")
+        numCam = input("Entrez le numéro de la caméra: ")
+        
+        cur = conn.cursor()
+        cur.execute("SELECT 1 FROM Wishlist WHERE numCli = ? AND numCam = ?", (numCli, numCam))
+        if not cur.fetchone():
+            print("Aucun élément trouvé dans la wishlist avec ces identifiants.")
+            return
+        
+        newNumCli = input("Entrez le nouveau numéro du client: ")
+        newNumCam = input("Entrez le nouveau numéro de la caméra: ")
+
+        # Check if client exists
+        cur.execute("SELECT 1 FROM Client WHERE numCli = ?", (newNumCli,))
+        if not cur.fetchone():
+            print("Le client spécifié n'existe pas.")
+            return
+        
+        # Check if camera exists
+        cur.execute("SELECT 1 FROM Camera WHERE numCam = ?", (newNumCam,))
+        if not cur.fetchone():
+            print("La caméra spécifiée n'existe pas.")
+            return
+
+        cur.execute("UPDATE Wishlist SET numCli = ?, numCam = ? WHERE numCli = ? AND numCam = ?", (newNumCli, newNumCam, numCli, numCam))
+        conn.commit()
+        print("Mise à jour de la wishlist réussie.")
+    except sqlite3.IntegrityError as e:
+        print("Erreur lors de la mise à jour de la wishlist: ", e)
+    except sqlite3.Error as e:
+        print("Erreur de base de données: ", e)
 
 
 
